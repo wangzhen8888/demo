@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -12,5 +13,7 @@ public interface UserMapper {
      *
      * @return
      */
-    Map<String,Object> getName();
+    Map<String, Object> getName();
+
+    Integer insertForeach(List<Map<String, Object>> list);
 }

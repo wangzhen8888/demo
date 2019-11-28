@@ -20,7 +20,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 @EnableTransactionManagement
 public class TransactionConfig {
 
-    private static final String ASPECTJ_EXPRESSION = "execution(* cn.rivamed..service..*Service*.*(..))";
+    private static final String ASPECTJ_EXPRESSION = "execution(* com.example.demo..*.*(..))";
 
     @Autowired
     private PlatformTransactionManager transactionManager;
@@ -37,17 +37,20 @@ public class TransactionConfig {
 
         NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
 
+        source.addTransactionalMethod("add*", txAttr_REQUIRED);
         source.addTransactionalMethod("save*", txAttr_REQUIRED);
-        source.addTransactionalMethod("remove*", txAttr_REQUIRED);
+        source.addTransactionalMethod("insert*", txAttr_REQUIRED);
+        source.addTransactionalMethod("delete*", txAttr_REQUIRED);
         source.addTransactionalMethod("update*", txAttr_REQUIRED);
         source.addTransactionalMethod("exec*", txAttr_REQUIRED);
-//        source.addTransactionalMethod("set*", txAttr_REQUIRED);
-//        source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
-//        source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
-//        source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
-//        source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);
-//        source.addTransactionalMethod("count*", txAttr_REQUIRED_READONLY);
-//        source.addTransactionalMethod("is*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("set*", txAttr_REQUIRED);
+        source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("count*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("is*", txAttr_REQUIRED_READONLY);
+
 
         return new TransactionInterceptor(transactionManager, source);
     }
